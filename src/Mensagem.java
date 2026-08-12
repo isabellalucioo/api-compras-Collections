@@ -38,11 +38,11 @@ public class Mensagem {
     }
 
     void Devolucao(){
-        System.out.println("digite o numero do produto pra removê-lo:");
+        System.out.println("digite o numero do produto pra devolvê-lo:");
     }
 
-    String produtoDevolvido(){
-        return "Produto devolvido.";
+    void produtoDevolvido(){
+        System.out.println("Produto devolvido.");
     }
 
     void carrinhoVazio(){

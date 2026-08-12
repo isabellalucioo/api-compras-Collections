@@ -16,17 +16,14 @@ public class CartaoCredito {
 
     public boolean realizarCompra(double preco){
         if (saldo >= preco){
-            saldo = getSaldo() - preco;
-            mensagem.compraRealizada();
+            saldo = getSaldo() - preco;            ;
             return true;
         }
-            mensagem.limiteInsufi();
             return false;
     }
 
     public void devolverCompra(double preco){
         saldo = saldo + preco;
-        mensagem.produtoDevolvido();
     }
 
 }

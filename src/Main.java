@@ -36,7 +36,11 @@ public class Main {
                 //Realiza compra se o limite estiver de acordo
                 if (cartao.realizarCompra(preco)) {
                     listaCompras.add(produto);
+                    mensagem.compraRealizada();
+                } else {
+                    mensagem.limiteInsufi();
                 }
+
 
             } else if (opcao == 2) {
                 //Cancela opcao 2 porque ta vazio
@@ -51,6 +55,7 @@ public class Main {
                     Produto devolvido = listaCompras.remove(produtoDevolvido);
 
                     cartao.devolverCompra(devolvido.getPreco());
+                    mensagem.produtoDevolvido();
                 }
 
             } else if (opcao > 2 || opcao < 0) {
