@@ -1,56 +1,50 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
 public class Menu {
+    Scanner scanner;
+    Mensagem mensagem;
+    ArrayList<Produto> listaCompras;
 
-    void mensagemInsertLimite(){
-        System.out.println("\uD83D\uDCB3-----Insira o limte do cartão:-----\uD83D\uDCB3");
+    public Menu(Scanner scanner, Mensagem mensagem, ArrayList<Produto> listaCompras) {
+        this.scanner = scanner;
+        this.mensagem = mensagem;
+        this.listaCompras = listaCompras;
     }
 
-    String mensagemLimiteRestante(){
-        return "Limite do cartão restante: R$ ";
+    public double inserirSaldo(){
+        mensagem.insertLimite();
+        return scanner.nextDouble();
     }
 
-    void mensagemMenu(){
-        System.out.println("Digite 0 pra finalizar compra, 1 para adicionar itens na compra e 2 para devolver");
+    public String inserirNomeProduto() {
+        mensagem.insertProduto();
+        return scanner.nextLine();
     }
 
-    void mensagemInsertProduto(){
-        System.out.println("Insira o nome do produto:");
+    public double inserirPreco(){
+        mensagem.insertValor();
+        return scanner.nextDouble();
     }
 
-    void mensagemInsertValor(){
-        System.out.println("Insira o valor do produto:");
+    public boolean devolverCompra(){
+        return true;
     }
 
-    void mensagemLimiteInsufi(){
-        System.out.println("Limite Insuficiente");
+    public void finalizarCompra(){
+        Collections.sort(listaCompras, Collections.reverseOrder());
+        for (Produto item : listaCompras){
+            System.out.println(item);
+        }
+        mensagem.compraFinalizada();
     }
 
-    void mensagemInvalido(){
-        System.out.println("Digite um valor válido.");
+    public void visualizarLista(){
+        for (int i = 0; i < listaCompras.size(); i++) {
+            System.out.println(i + " - " + listaCompras.get(i));
+        }
     }
-
-    void compraRealizada(){
-        System.out.println("Adicionado ao Carrinho!");
-    }
-
-    void compraFinalizada(){
-        System.out.println("Compra finalizada.");
-        System.out.println("-----Recibo-----");
-    }
-
-    void menuDevolucao(){
-        System.out.println("digite o numero do produto pra removê-lo:");
-    }
-
-    String produtoDevolvido(){
-        return " devolvido.";
-    }
-
-    void carrinhoVazio(){
-        System.out.println("Não há produtos a serem devolvidos.");
-    }
-
-
-
 
 
 

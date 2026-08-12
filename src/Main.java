@@ -3,87 +3,70 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Menu menu = new Menu();
-        List<Produto> listaCompras = new ArrayList<>();
+        Mensagem mensagem = new Mensagem();
+        ArrayList<Produto> listaCompras = new ArrayList<>();
 
-        //inicializacao do cartao
-        menu.mensagemInsertLimite();
-        double saldo = (scanner.nextDouble());
+        Menu menu = new Menu(scanner, mensagem, listaCompras);
+
+        //Recebendo os atributos do cartao
+        double saldo = menu.inserirSaldo();
         while (saldo <= 0) {
-            menu.mensagemInvalido();
-            menu.mensagemInsertLimite();
-            saldo = (scanner.nextDouble());
+            mensagem.invalido();
+            saldo = menu.inserirSaldo();
         }
 
         CartaoCredito cartao = new CartaoCredito(saldo);
         scanner.nextLine();
 
-        //Loop do menu
+        //inicia do menu
         int opcao = 1;
-        while (opcao != 0){
-            if (opcao == 1){
-                menu.mensagemInsertProduto();
-                String nome = scanner.nextLine();
-
-
-                menu.mensagemInsertValor();
-                double preco = scanner.nextDouble();
-
+        while (opcao != 0) {
+            if (opcao == 1) {
+                //Recebendo os atributos de Produto
+                String nome = menu.inserirNomeProduto();
+                double preco = menu.inserirPreco();
                 while (preco < 0) {
-                    menu.mensagemInvalido();
-                    menu.mensagemInsertValor();
-                    preco = scanner.nextDouble();
+                    mensagem.invalido();
+                    preco = menu.inserirPreco();
                 }
-
                 scanner.nextLine();
+                //Criando o novo produto
+                Produto produto = new Produto(nome, preco);
 
-                if (cartao.getSaldo() >= preco){
-                    cartao.setSaldo(cartao.getSaldo() - preco);
-                    Produto produto = new Produto(nome, preco);
+                //Realiza compra se o limite estiver de acordo
+                if (cartao.realizarCompra(preco)) {
                     listaCompras.add(produto);
-                    menu.compraRealizada();
-
-
-                } else {
-                    menu.mensagemLimiteInsufi();
                 }
 
             } else if (opcao == 2) {
-                if (listaCompras.isEmpty()){
-                    menu.carrinhoVazio();
+                //Cancela opcao 2 porque ta vazio
+                if (listaCompras.isEmpty()) {
+                    mensagem.carrinhoVazio();
                 } else {
-                    menu.menuDevolucao();
-                    for (int i = 0; i < listaCompras.size(); i++){
-                        System.out.println(i + " - " + listaCompras.get(i));
-                    }
+                    mensagem.Devolucao();
+                    menu.visualizarLista();
 
                     int produtoDevolvido = scanner.nextInt();
                     scanner.nextLine();
+                    Produto devolvido = listaCompras.remove(produtoDevolvido);
 
-                    if (produtoDevolvido >= 0 && produtoDevolvido < listaCompras.size()) {
-                        Produto devolvido = listaCompras.remove(produtoDevolvido);
-                        cartao.setSaldo(cartao.getSaldo() + devolvido.getPreco());
-                        System.out.println(devolvido + menu.produtoDevolvido());
-                    }
+                    cartao.devolverCompra(devolvido.getPreco());
                 }
 
-            }else if (opcao > 2 || opcao < 0) {
-                menu.mensagemInvalido();
-
+            } else if (opcao > 2 || opcao < 0) {
+                mensagem.invalido();
             }
 
-            menu.mensagemMenu();
+            // Acao basica do loop, tem que sempre voltar pra ca
+            mensagem.menu();
             opcao = scanner.nextInt();
             scanner.nextLine();
 
         }
 
-        Collections.sort(listaCompras, Collections.reverseOrder());
-        for (Produto item : listaCompras){
-            System.out.println(item);
-        }
-        menu.compraFinalizada();
-        System.out.print(menu.mensagemLimiteRestante() + cartao.getSaldo());
-        }
+        menu.finalizarCompra();
+        System.out.print(mensagem.limiteRestante() + cartao.getSaldo());
+    }
+
     }
 

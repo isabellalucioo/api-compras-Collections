@@ -28,9 +28,10 @@ public class Produto implements Comparable <Produto> {
         return nome + " R$" + preco ;
     }
 
-
     @Override
     public int compareTo(Produto produto) {
         return Double.compare(this.preco, produto.preco);
     }
+
+
 }
