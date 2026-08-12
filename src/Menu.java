@@ -3,9 +3,9 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Menu {
-    Scanner scanner;
-    Mensagem mensagem;
-    ArrayList<Produto> listaCompras;
+    private Scanner scanner;
+    private Mensagem mensagem;
+    private ArrayList<Produto> listaCompras;
 
     public Menu(Scanner scanner, Mensagem mensagem, ArrayList<Produto> listaCompras) {
         this.scanner = scanner;
@@ -15,7 +15,12 @@ public class Menu {
 
     public double inserirSaldo(){
         mensagem.insertLimite();
-        return scanner.nextDouble();
+        double saldo = scanner.nextDouble();
+        while (saldo <= 0) {
+            mensagem.invalido();
+            saldo = scanner.nextDouble();
+        }
+        return saldo;
     }
 
     public String inserirNomeProduto() {
@@ -25,19 +30,27 @@ public class Menu {
 
     public double inserirPreco(){
         mensagem.insertValor();
-        return scanner.nextDouble();
+        double preco = scanner.nextDouble();
+        while (preco < 0) {
+            mensagem.invalido();
+            mensagem.insertValor();
+            preco =scanner.nextDouble();
+        }
+        scanner.nextLine();
+        return preco;
     }
 
-    public boolean devolverCompra(){
-        return true;
+    public void adicionarAoCarrinho(Produto produto){
+        listaCompras.add(produto);
+        mensagem.compraRealizada();
     }
 
     public void finalizarCompra(){
-        Collections.sort(listaCompras, Collections.reverseOrder());
+        Collections.sort(listaCompras);
+        mensagem.compraFinalizada();
         for (Produto item : listaCompras){
             System.out.println(item);
         }
-        mensagem.compraFinalizada();
     }
 
     public void visualizarLista(){
@@ -46,6 +59,22 @@ public class Menu {
         }
     }
 
+    public boolean devolverCompraAutorizado() {
+        if (listaCompras.isEmpty()) {
+            mensagem.carrinhoVazio();
+            return false;
+        }
+        mensagem.Devolucao();
+        visualizarLista();
+        return true;
+    }
 
+    public double produtoDevolvido(){
+        int produtoDevolvido = scanner.nextInt();
+        scanner.nextLine();
+        Produto devolvido = listaCompras.remove(produtoDevolvido);
+        mensagem.produtoDevolvido();
+        return devolvido.getPreco();
+    }
 
 }

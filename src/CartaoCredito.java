@@ -1,5 +1,5 @@
 public class CartaoCredito {
-    double saldo;
+    private double saldo;
 
 
     public CartaoCredito(double saldo) {
@@ -10,19 +10,15 @@ public class CartaoCredito {
         return saldo;
     }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-
-    public boolean realizarCompra(double preco){
+    public boolean autorizarCompra(double preco){
         if (saldo >= preco){
-            saldo = getSaldo() - preco;
+            saldo -= preco;
             return true;
         }
             return false;
     }
 
-    public void devolverCompra(double preco){
+    public void reembolsaCompra(double preco){
         saldo = saldo + preco;
     }
 
