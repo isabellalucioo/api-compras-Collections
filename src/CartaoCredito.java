@@ -1,6 +1,6 @@
 public class CartaoCredito {
     double saldo;
-    Mensagem mensagem;
+
 
     public CartaoCredito(double saldo) {
         this.saldo = saldo;
