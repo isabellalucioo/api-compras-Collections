@@ -16,7 +16,7 @@ public class CartaoCredito {
 
     public boolean realizarCompra(double preco){
         if (saldo >= preco){
-            saldo = getSaldo() - preco;            ;
+            saldo = getSaldo() - preco;
             return true;
         }
             return false;
