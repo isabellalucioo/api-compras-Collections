@@ -1,7 +1,7 @@
 #                                                    <img width="2880" height="1440" alt="Ilustração-20260812" src="https://github.com/user-attachments/assets/cf53fbe3-f5d2-425d-b65f-4497d0c41147" />
 
 
-Api desenvolvida durante a conclusão de curso da Alura - Trabalhando com listas e coleções de dados.
+Projeto desenvolvida durante a conclusão de curso da Alura - Trabalhando com listas e coleções de dados.
 
 # O que faz:
 - Cria um cartão de crédito com limite que você imputa.
